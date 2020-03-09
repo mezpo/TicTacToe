@@ -4,10 +4,19 @@
 
 using namespace std;
 
+int close = 1;
+
 void enter_sign(char sign_position[3][3], int position_col, int  position_poem , char turn);
 
 void XandO_board_drawing(char fields[3][3])
 {
+    cout << endl;
+    cout << endl;
+    cout << "--------------------------------------------------------------------------------------\n";
+    cout << "W, A, S, D => navigating the blackboard\n";
+    cout << "Enter => confirmation of the X or O character in the field we are currently on\n";
+    cout << "E => Exit\n";
+    cout << "--------------------------------------------------------------------------------------\n";
     cout << endl;
     cout << endl;
     cout << "\t\t_________________________" << endl;
@@ -26,6 +35,13 @@ void XandO_board_drawing(char fields[3][3])
 
 void WHERE_board_drawing(char fields[3][3])
 {
+    cout << endl;
+    cout << endl;
+    cout << "--------------------------------------------------------------------------------------\n";
+    cout << "W, A, S, D => navigating the blackboard\n";
+    cout << "Enter => confirmation of the X or O character in the field we are currently on\n";
+    cout << "E => Exit\n";
+    cout << "--------------------------------------------------------------------------------------\n";
     cout << endl;
     cout << endl;
     cout << "\t\t_________________________" << endl;
@@ -62,7 +78,7 @@ void move(char fields_position[3][3] , char sign_position[3][3], char turn)
     int position_col = 1, position_poem = 1;
     fields_position[position_col][position_poem] = '#';
 
-    WHERE_board_drawing(fields_position);
+    
 
 
     while (true) {
@@ -76,10 +92,15 @@ void move(char fields_position[3][3] , char sign_position[3][3], char turn)
             }
             else {
                 system("cls");
+
                 fields_position[position_col][position_poem] = ' ';
                 position_poem = position_poem - 1;
                 fields_position[position_col][position_poem] = '#';
+
                 WHERE_board_drawing(fields_position);
+                Sleep(150);
+                system("cls");
+                XandO_board_drawing(sign_position);
 
             }
             continue;
@@ -94,7 +115,9 @@ void move(char fields_position[3][3] , char sign_position[3][3], char turn)
                 position_poem = position_poem + 1;
                 fields_position[position_col][position_poem] = '#';
                 WHERE_board_drawing(fields_position);
-
+                Sleep(150);
+                system("cls");
+                XandO_board_drawing(sign_position);
             }
             continue;
 
@@ -108,7 +131,9 @@ void move(char fields_position[3][3] , char sign_position[3][3], char turn)
                 position_col = position_col - 1;
                 fields_position[position_col][position_poem] = '#';
                 WHERE_board_drawing(fields_position);
-
+                Sleep(150);
+                system("cls");
+                XandO_board_drawing(sign_position);
 
             }
             continue;
@@ -123,21 +148,34 @@ void move(char fields_position[3][3] , char sign_position[3][3], char turn)
                 position_col = position_col + 1;
                 fields_position[position_col][position_poem] = '#';
                 WHERE_board_drawing(fields_position);
-
+                Sleep(150);
+                system("cls");
+                XandO_board_drawing(sign_position);
             }
             continue;
-            //continue;
+            
 
         case enter:
             cout << "Enter" << endl;
 
-            enter_sign(sign_position, position_col, position_poem, turn);
+            if (sign_position[position_col][position_poem] == ' ') {
+
+                sign_position[position_col][position_poem] = turn;
+            }
+            else {
+                cout << "There is a sign\n";
+                cout << "Change field!\n";
+                continue;
+            }
 
             break;
-
+        case 'E':
+            cout << "Closing the game...\n";
+            close = 0;
+            Sleep(1000);
+            break;
         default:
-            cout << "5" << endl;
-
+            cout << "I do not recognize this sign" << endl;
             continue;
         }
 
@@ -145,29 +183,7 @@ void move(char fields_position[3][3] , char sign_position[3][3], char turn)
     }
 }
 
-void enter_sign(char sign_position[3][3], int position_col, int  position_poem , char turn)
-{
 
-    const char enter = 13;
-    char choice;
-    choice = _getch();
-    switch (choice)
-    {
-    case enter:
-        if (sign_position[position_col][position_poem] == ' ') {
-
-            sign_position[position_col][position_poem] = turn;
-        }
-        else {
-            cout << "There is a sing!" << endl;
-        }
-        break;
-    default:
-
-        break;
-    }
-    
-}
 
 int main()
 {
@@ -182,19 +198,22 @@ int main()
    
 
     //MEUE
-    while (true) {
+    while (close) {
 
         char turn;
+       
 
         turn = 'X';
+        XandO_board_drawing(sign_position);
         move(fields_position, sign_position , turn);
         system("cls");
-        XandO_board_drawing(sign_position);
 
+        
         turn = 'O';
+        XandO_board_drawing(sign_position);
         move(fields_position, sign_position, turn);
         system("cls");
-        XandO_board_drawing(sign_position);
+
     }
 }
 
