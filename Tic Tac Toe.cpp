@@ -6,17 +6,15 @@ using namespace std;
 
 int close = 1;
 
-void enter_sign(char sign_position[3][3], int position_col, int  position_poem , char turn);
-
 void XandO_board_drawing(char fields[3][3])
 {
     cout << endl;
     cout << endl;
-    cout << "--------------------------------------------------------------------------------------\n";
-    cout << "W, A, S, D => navigating the blackboard\n";
-    cout << "Enter => confirmation of the X or O character in the field we are currently on\n";
-    cout << "E => Exit\n";
-    cout << "--------------------------------------------------------------------------------------\n";
+    cout << "----------------------------------------------------------------------------------------------\n";
+    cout << "W, A, S, D \t=>\tnavigating the blackboard\n";
+    cout << "Enter \t\t=> \tconfirmation of the X or O character in the field we are currently on\n";
+    cout << "E \t\t=> \tExit\n";
+    cout << "----------------------------------------------------------------------------------------------\n";
     cout << endl;
     cout << endl;
     cout << "\t\t_________________________" << endl;
@@ -30,18 +28,18 @@ void XandO_board_drawing(char fields[3][3])
     cout << "\t\t|   " << fields[2][0] << "   |   " << fields[2][1] << "   |   " << fields[2][2] << "   |" << endl;
     cout << "\t\t|_______|_______|_______|" << endl;
     cout << endl;
-    //cout << ":"<<fields[1][0] << endl;
+   
 }
 
 void WHERE_board_drawing(char fields[3][3])
 {
     cout << endl;
     cout << endl;
-    cout << "--------------------------------------------------------------------------------------\n";
-    cout << "W, A, S, D => navigating the blackboard\n";
-    cout << "Enter => confirmation of the X or O character in the field we are currently on\n";
-    cout << "E => Exit\n";
-    cout << "--------------------------------------------------------------------------------------\n";
+    cout << "----------------------------------------------------------------------------------------------\n";
+    cout << "W, A, S, D \t=>\tnavigating the blackboard\n";
+    cout << "Enter \t\t=> \tconfirmation of the X or O character in the field we are currently on\n";
+    cout << "E \t\t=> \tExit\n";
+    cout << "----------------------------------------------------------------------------------------------\n";
     cout << endl;
     cout << endl;
     cout << "\t\t_________________________" << endl;
@@ -54,6 +52,7 @@ void WHERE_board_drawing(char fields[3][3])
     cout << "\t\t|       |       |       |" << endl;
     cout << "\t\t|   " << fields[2][0] << "   |   " << fields[2][1] << "   |   " << fields[2][2] << "   |" << endl;
     cout << "\t\t|_______|_______|_______|" << endl;
+    
 }
 
 void initializing_variables(char fields[3][3])
@@ -68,7 +67,6 @@ void initializing_variables(char fields[3][3])
 }
 
 
-
 void move(char fields_position[3][3] , char sign_position[3][3], char turn)
 {
     const char left = 'A', right = 'D', up = 'W', down = 'S', enter = 13;
@@ -79,16 +77,14 @@ void move(char fields_position[3][3] , char sign_position[3][3], char turn)
     fields_position[position_col][position_poem] = '#';
 
     
-
-
+    
     while (true) {
-
         choice = _getch();
         switch (toupper(choice)) {
-
+      
         case left:
             if (position_poem == 0) {
-                cout << "You are on the edge" << endl;
+                cout << "\t\tYou are on the edge!" << endl;
             }
             else {
                 system("cls");
@@ -96,12 +92,12 @@ void move(char fields_position[3][3] , char sign_position[3][3], char turn)
                 fields_position[position_col][position_poem] = ' ';
                 position_poem = position_poem - 1;
                 fields_position[position_col][position_poem] = '#';
-
+                
                 WHERE_board_drawing(fields_position);
-                Sleep(150);
+                Sleep(250);
                 system("cls");
                 XandO_board_drawing(sign_position);
-
+                
             }
             continue;
 
@@ -115,7 +111,7 @@ void move(char fields_position[3][3] , char sign_position[3][3], char turn)
                 position_poem = position_poem + 1;
                 fields_position[position_col][position_poem] = '#';
                 WHERE_board_drawing(fields_position);
-                Sleep(150);
+                Sleep(250);
                 system("cls");
                 XandO_board_drawing(sign_position);
             }
@@ -131,7 +127,7 @@ void move(char fields_position[3][3] , char sign_position[3][3], char turn)
                 position_col = position_col - 1;
                 fields_position[position_col][position_poem] = '#';
                 WHERE_board_drawing(fields_position);
-                Sleep(150);
+                Sleep(250);
                 system("cls");
                 XandO_board_drawing(sign_position);
 
@@ -148,7 +144,7 @@ void move(char fields_position[3][3] , char sign_position[3][3], char turn)
                 position_col = position_col + 1;
                 fields_position[position_col][position_poem] = '#';
                 WHERE_board_drawing(fields_position);
-                Sleep(150);
+                Sleep(250);
                 system("cls");
                 XandO_board_drawing(sign_position);
             }
@@ -156,8 +152,6 @@ void move(char fields_position[3][3] , char sign_position[3][3], char turn)
             
 
         case enter:
-            cout << "Enter" << endl;
-
             if (sign_position[position_col][position_poem] == ' ') {
 
                 sign_position[position_col][position_poem] = turn;
@@ -184,6 +178,44 @@ void move(char fields_position[3][3] , char sign_position[3][3], char turn)
 }
 
 
+bool if_win(char sign_positon[3][3]) 
+{
+    if ((sign_positon[0][0] == 'X' && sign_positon[0][1] == 'X' && sign_positon[0][2] == 'X')
+       || (sign_positon[0][0] == 'O' && sign_positon[0][1] == 'O' && sign_positon[0][2] == 'O')) {
+        return true;
+    }
+    else if (sign_positon[1][0] == 'X' && sign_positon[1][1] == 'X' && sign_positon[1][2] == 'X'
+            || (sign_positon[1][0] == 'O' && sign_positon[1][1] == 'O' && sign_positon[1][2] == 'O')) {
+        return true;
+    }
+    else if (sign_positon[2][0] == 'X' && sign_positon[2][1] == 'X' && sign_positon[2][2] == 'X'
+            || (sign_positon[2][0] == 'O' && sign_positon[2][1] == 'O' && sign_positon[2][2] == 'O')) {
+        return true;
+    }
+    else if (sign_positon[0][0] == 'X' && sign_positon[1][0] == 'X' && sign_positon[2][0] == 'X'
+            || (sign_positon[0][0] == 'O' && sign_positon[1][0] == 'O' && sign_positon[2][0] == 'O')) {
+        return true;
+    }
+    else if (sign_positon[0][1] == 'X' && sign_positon[1][1] == 'X' && sign_positon[2][1] == 'X'
+            || (sign_positon[0][1] == 'O' && sign_positon[1][1] == 'O' && sign_positon[2][1] == 'O')) {
+        return true;
+    }
+    else if (sign_positon[0][2] == 'X' && sign_positon[1][2] == 'X' && sign_positon[2][2] == 'X'
+            || (sign_positon[0][2] == 'O' && sign_positon[1][2] == 'O' && sign_positon[2][2] == 'O')) {
+        return true;
+    }
+    else if (sign_positon[0][0] == 'X' && sign_positon[1][1] == 'X' && sign_positon[2][2] == 'X'
+            || (sign_positon[0][0] == 'O' && sign_positon[1][1] == 'O' && sign_positon[2][2] == 'O')) {
+        return true;
+    }
+    else if ((sign_positon[2][0] == 'X' && sign_positon[1][1] == 'X' && sign_positon[0][2] == 'X')
+            || (sign_positon[2][0] == 'O' && sign_positon[1][1] == 'O' && sign_positon[0][2] == 'O')) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
 
 int main()
 {
@@ -196,24 +228,37 @@ int main()
     initializing_variables(fields_position);
     initializing_variables(sign_position);
    
-
-    //MEUE
     while (close) {
 
         char turn;
        
-
         turn = 'X';
         XandO_board_drawing(sign_position);
+        cout << "\t\tTurn player " << turn << endl;
         move(fields_position, sign_position , turn);
+        
+        if (if_win(sign_position)) {
+            system("cls");
+            XandO_board_drawing(sign_position);
+            cout << "\t\tThe player with X wins\n";
+            break;
+        }
+        if (close == 0) {
+            break;
+        }
         system("cls");
 
-        
         turn = 'O';
         XandO_board_drawing(sign_position);
+        cout << "\t\tTurn player " << turn << endl;
         move(fields_position, sign_position, turn);
+        if (if_win(sign_position)) {
+            system("cls");
+            XandO_board_drawing(sign_position);
+            cout << "\t\tThe player with O wins\n";
+            break;
+        }
         system("cls");
-
     }
 }
 
